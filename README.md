@@ -79,7 +79,7 @@ A PRG32 cartridge exports three functions:
 
 `init` sets the initial state, `update` reads input and advances the model, and `draw` renders the state. This separation is a gentle bridge from C to assembly: students first see the same game logic in C, then follow the exact same responsibilities in RISC-V assembly.
 
-For this game the prefixes are:
+For this game, the prefixes are:
 
 | Version | Entry prefix | Exported symbols |
 |---|---|---|
@@ -98,8 +98,8 @@ Example layout:
 ```sh
 mkdir -p $HOME/src
 cd $HOME/src
-git clone https://github.com/raffmont/PRG32.git
-git clone https://github.com/your-org/you_have_got_pizza.git
+git clone https://github.com/riscv-prg32/PRG32.git
+git clone https://github.com/riscv-prg32/YouHaveGotPizza.git
 ```
 
 Install and export ESP-IDF as required by PRG32. The PRG32 documentation currently uses ESP-IDF with ESP32-C3 support for QEMU and ESP32-C6 support for the physical board.
