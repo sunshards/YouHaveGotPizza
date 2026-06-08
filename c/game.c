@@ -13,9 +13,9 @@
  * PRG32 asks a cartridge to export exactly three functions. The cartridge builder
  * finds them from the entry prefix passed on the command line:
  *
- *     you_have_got_pizza_c_init
- *     you_have_got_pizza_c_update
- *     you_have_got_pizza_c_draw
+ * you_have_got_pizza_c_init
+ * you_have_got_pizza_c_update
+ * you_have_got_pizza_c_draw
  *
  * The update function changes the model. The draw function renders the model.
  * Keeping those responsibilities separate is a very useful habit when students
@@ -179,11 +179,13 @@ static void move_player(uint32_t input) {
 
     int ladder = nearest_ladder_index(player.x + PLAYER_W / 2);
     if (ladder >= 0) {
-        player.x = ladder_x[ladder] - PLAYER_W / 2;
+        /* FIXED: Only snap to ladder and shift rows if UP or DOWN is actively pressed */
         if ((input & PRG32_BTN_UP) && player.row > 0) {
+            player.x = ladder_x[ladder] - PLAYER_W / 2;
             player.row--;
             prg32_audio_beep(330, 18);
         } else if ((input & PRG32_BTN_DOWN) && player.row < NUM_ROWS - 1) {
+            player.x = ladder_x[ladder] - PLAYER_W / 2;
             player.row++;
             prg32_audio_beep(220, 18);
         }
