@@ -1,0 +1,37 @@
+{
+  "abi": "prg32-colophon-1.0",
+  "title": "You Have Got Pizza",
+  "subtitle": "Academic piazza arcade cartridge",
+  "version": "1.1.0",
+  "release_date": "2026-06-11",
+  "developer": {
+    "name": "UniParthenope PRG32",
+    "url": "https://github.com/riscv-prg32/YouHaveGotPizza"
+  },
+  "authors": [
+    {
+      "role": "academic supervisor / project lead",
+      "name": "Raffaele Montella - UniParthenope"
+    }
+  ],
+  "license": "MIT",
+  "copyright": "Copyright 2026 UniParthenope PRG32 contributors",
+  "acknowledgements": [
+    "Built as an original third-party PRG32 cartridge for teaching RISC-V through visible gameplay."
+  ],
+  "controls": [
+    {
+      "input": "LEFT / RIGHT",
+      "action": "Walk on the current platform"
+    },
+    {
+      "input": "UP / DOWN",
+      "action": "Climb when aligned with a ladder"
+    },
+    {
+      "input": "START",
+      "action": "Restart after game over"
+    }
+  ],
+  "start_prompt": "Collect dough, sauce, cheese, and basil"
+}

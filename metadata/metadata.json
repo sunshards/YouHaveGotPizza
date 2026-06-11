@@ -1,0 +1,62 @@
+{
+  "abi": "prg32-metadata-1.0",
+  "id": "org.uniparthenope.prg32.you-have-got-pizza",
+  "title": "You Have Got Pizza",
+  "version": "1.1.0",
+  "summary": "Portable PRG32 arcade cartridge about making pizza in an academic piazza.",
+  "description": "You Have Got Pizza is an original PRG32 arcade game for the European RISC-V Summit 2026 demonstration track. The player is a professor collecting dough, sauce, cheese, and basil while avoiding hungry students. This build packages the C version as a portable ABI-table cartridge by default so it can be built, uploaded, and published through the same workflow used by DeviceDemo.",
+  "authors": [
+    {
+      "name": "Raffaele Montella",
+      "affiliation": "UniParthenope"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/riscv-prg32/YouHaveGotPizza",
+  "repository": "https://github.com/riscv-prg32/YouHaveGotPizza",
+  "tags": [
+    "game",
+    "arcade",
+    "education",
+    "riscv",
+    "prg32"
+  ],
+  "created_at": "2026-06-08T00:00:00Z",
+  "updated_at": "2026-06-11T00:00:00Z",
+  "runtime": {
+    "platform": "PRG32",
+    "isa": "RV32I",
+    "architecture": "esp32c6",
+    "architectures": [
+      {
+        "id": "esp32c6",
+        "label": "ESP32-C6 hardware",
+        "target": "esp32c6",
+        "display": "ili9341",
+        "isa": "RV32I"
+      },
+      {
+        "id": "qemu",
+        "label": "QEMU virtual screen",
+        "target": "esp32c3",
+        "display": "qemu-rgb",
+        "isa": "RV32I"
+      }
+    ]
+  },
+  "assets": {
+    "icon": {
+      "block": "ICON",
+      "mime": "image/png"
+    },
+    "screenshot": {
+      "block": "SCRN",
+      "mime": "image/png",
+      "optional": true
+    }
+  },
+  "colophon": {
+    "block": "COLO",
+    "abi": "prg32-colophon-1.0"
+  }
+}
