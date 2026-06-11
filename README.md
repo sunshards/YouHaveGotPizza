@@ -22,6 +22,8 @@ you_have_got_pizza/
 |-- c/
 |   `-- game.c
 |-- assets/
+|   |-- icon.png
+|   |-- screenshot.png
 |   |-- generate_assets.py
 |   |-- manifest.json
 |   |-- original_art.md
@@ -45,6 +47,15 @@ you_have_got_pizza/
 |       |-- sfx_pizza_ready.wav
 |       |-- sfx_student_collision.wav
 |       `-- sfx_game_over.wav
+|-- docs/
+|   `-- build-and-publish.md
+|-- metadata/
+|   |-- colophon.json
+|   |-- manifest.json
+|   `-- metadata.json
+|-- scripts/
+|   |-- build.sh
+|   `-- pack-store-bundle.sh
 `-- tools/
     `-- build_cartridges.sh
 ```
@@ -110,14 +121,103 @@ On each new shell, source ESP-IDF before using `idf.py`:
 . $HOME/esp-idf/export.sh
 ```
 
-Then tell the helper script where PRG32 is:
+Then tell the portable helper script where PRG32 is:
 
 ```sh
-export PRG32_ROOT=$HOME/src/PRG32
+export PRG32_REPO=$HOME/src/PRG32
 cd $HOME/src/you_have_got_pizza
 ```
 
-You can also pass `--prg32-root /path/to/PRG32` instead of exporting `PRG32_ROOT`.
+The default build matches the portable cartridge workflow used by DeviceDemo on
+branch `dev-portable-1`: it builds the C cartridge as a portable ABI-table
+cartridge, attaches Store metadata, and writes a publishable `.prg32` file.
+
+## Build a portable cartridge
+
+Build for ESP32-C6 hardware:
+
+```sh
+export PRG32_REPO=$HOME/src/PRG32
+export PRG32_ARCHITECTURE=esp32c6
+scripts/build.sh
+```
+
+The output is:
+
+```text
+dist/you-have-got-pizza-esp32c6.prg32
+```
+
+Build for QEMU:
+
+```sh
+export PRG32_REPO=$HOME/src/PRG32
+export PRG32_ARCHITECTURE=qemu
+scripts/build.sh
+```
+
+The output is:
+
+```text
+dist/you-have-got-pizza-qemu.prg32
+```
+
+Portable builds are enabled by default with `PRG32_PORTABLE=1`. To build the
+legacy firmware-specific absolute-import format for older firmware, set
+`PRG32_PORTABLE=0` and pass the matching firmware ELF:
+
+```sh
+export PRG32_PORTABLE=0
+export PRG32_ARCHITECTURE=esp32c6
+scripts/build.sh "$PRG32_REPO/build/PRG32.elf"
+```
+
+## Deploy a portable cartridge
+
+Upload to a PRG32 ESP32-C6 board:
+
+```sh
+python3 "$PRG32_REPO/tools/prg32_game.py" upload \
+  dist/you-have-got-pizza-esp32c6.prg32 \
+  --url http://192.168.4.1
+```
+
+Stage the QEMU cartridge into a PRG32 QEMU flash image:
+
+```sh
+python3 "$PRG32_REPO/tools/prg32_game.py" upload-qemu \
+  dist/you-have-got-pizza-qemu.prg32 \
+  --flash "$PRG32_REPO/build-qemu/flash_image.bin" \
+  --partitions "$PRG32_REPO/partitions_prg32.csv"
+```
+
+## Publish a CartridgeStore bundle
+
+Build both architecture variants, pack the flat Store bundle, then publish:
+
+```sh
+export PRG32_REPO=$HOME/src/PRG32
+
+export PRG32_ARCHITECTURE=esp32c6
+scripts/build.sh
+
+export PRG32_ARCHITECTURE=qemu
+scripts/build.sh
+
+scripts/pack-store-bundle.sh
+
+python3 "$PRG32_REPO/tools/prg32_game.py" publish-bundle \
+  dist/you-have-got-pizza-store-bundle.zip \
+  --store-url http://192.168.1.42:5080 \
+  --token "$PRG32_STORE_TOKEN"
+```
+
+See `docs/build-and-publish.md` for the focused build, deploy, QEMU, and Store
+workflow.
+
+The older `tools/build_cartridges.sh` helper is still available for the
+previous firmware-building workflow. It uses `PRG32_ROOT` and can build both
+the C and assembly examples against a specific resident firmware image.
 
 ## Build the resident PRG32 firmware for QEMU
 
