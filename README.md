@@ -97,6 +97,13 @@ For this game, the prefixes are:
 | Assembly | `you_have_got_pizza` | `you_have_got_pizza_init`, `you_have_got_pizza_update`, `you_have_got_pizza_draw` |
 | C | `you_have_got_pizza_c` | `you_have_got_pizza_c_init`, `you_have_got_pizza_c_update`, `you_have_got_pizza_c_draw` |
 
+## Teaching tutorial
+
+For a complete first-year laboratory sequence, see
+[`docs/tutorial-create-you-have-got-pizza.md`](docs/tutorial-create-you-have-got-pizza.md).
+It guides students from design through the code-deploy-debug cycle and final
+publication on the Cartridge Store.
+
 ## Development requirements
 
 You need two separate repositories/directories:
